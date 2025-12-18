@@ -1,5 +1,10 @@
 import tkinter as tk
+import nec
+from nec import pi
+import pigpio
+import time
 
+pi.wave_clear()
 # -------- Command definitions --------
 COMMANDS = {
     0: "1",
@@ -19,22 +24,30 @@ COMMANDS = {
     14: "MUTE",
     15: "POWER",
     16: "LAST",
-    17: "UNUSED",
     18: "TV / AV",
     19: "SLEEP",
-    20: "MENU",
-    21: "NAV UP",
-    22: "NAV DOWN",
+    20: "MENU/BACK",
+    21: "UP",
+    22: "DOWN",
+    24: "ENTER"
 }
 
 # -------- Functions triggered by button events --------
 def on_button_press(command_number):
     print(f"Pressed: {command_number} ({COMMANDS[command_number]})")
-    # TODO: start action (e.g. send command, begin repeat)
+    #initial command
+    wf = []
+    nec.add_command(wf,command_number)
+    pi.wave_clear()
+    pi.wave_add_generic(wf)
+    wave_id = pi.wave_create()
+    pi.wave_send_repeat(wave_id)
+
 
 def on_button_release(command_number):
     print(f"Released: {command_number} ({COMMANDS[command_number]})")
-    # TODO: stop action (e.g. stop repeat, cleanup)
+    pi.wave_tx_stop()
+
 
 # -------- GUI setup --------
 root = tk.Tk()
