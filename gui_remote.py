@@ -24,7 +24,7 @@ COMMANDS = {
     14: "MUTE",
     15: "POWER",
     16: "LAST",
-    18: "TV / AV",
+    18: "TV/AV",
     19: "SLEEP",
     20: "MENU/BACK",
     21: "UP",
